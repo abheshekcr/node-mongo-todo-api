@@ -1,4 +1,5 @@
 const MongoClient=require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectID;
 
 var studentData=[
     {
@@ -35,12 +36,15 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp',(err,db)=>{
     });
     */
 
+    /*
     db.collection('NewStudents').insert(studentData).then((err,result)=>{
         if(err){
            return  console.log('unable to find',err);
         }
         console.log(JSON.stringify(result.ops,undefined,2));
     });
+
+    */
 
     /*
 
@@ -50,6 +54,23 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp',(err,db)=>{
         console.log('some error');
     })
     */
+
+    /*
+    db.collection('NewStudents').deleteOne({age:34}).then((result)=>{
+        console.log(result);
+    });
+
+    */
+
+    /*
+    db.collection('Users').deleteMany({name:'Abheshek'}).then((result)=>{
+        console.log(result);
+    });
+
+    */
+    db.collection('Users').deleteOne({"_id": ObjectId("5aa75cbd10a4b7161c14c135")}).then((result)=>{
+        console.log(result);
+    })
 
     db.close();
 });
