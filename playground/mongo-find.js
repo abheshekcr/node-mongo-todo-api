@@ -68,7 +68,39 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp',(err,db)=>{
     });
 
     */
+
+    /*
     db.collection('Users').deleteOne({"_id": ObjectId("5aa75cbd10a4b7161c14c135")}).then((result)=>{
+        console.log(result);
+    })
+    */
+
+    /*
+    db.collection('Todos').findOneAndUpdate({
+        _id:new ObjectId('5aa2165d0e8e521238caf21e')
+    },{
+        $set:{
+            completed:true
+        }
+    },{
+        returnOriginal:false
+    }).then((result)=>{
+        console.log(result);
+    })
+    */
+
+    db.collection('NewStudents').findOneAndUpdate({
+        _id:new ObjectId('5aa768e921871e15a4c68b7c')
+    },{
+        $set:{
+            name:'Kiran'
+        },
+        $inc:{
+            age:56
+        }
+    },{
+        returnOriginal:false
+    }).then((result)=>{
         console.log(result);
     })
 
