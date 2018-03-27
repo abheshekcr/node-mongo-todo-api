@@ -2,15 +2,16 @@ var mongoose=require('mongoose');
 
 var Todo=mongoose.model('Todo',{
     text:{
-        type:String
+        type:String,
+        required:true,
+        minlength:1,
+        trim:true
     },
     completed:{
         type:Boolean,
-        default:false
     },
     createdAt:{
         type:Number,
-        default:null
     }
 });
 
