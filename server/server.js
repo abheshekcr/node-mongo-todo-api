@@ -8,6 +8,8 @@ var {User}=require('./models/users');
 
 var {ObjectID}=require('mongodb');
 
+const port=process.env.port ||3000;
+
 
 
 var app=express();
@@ -51,8 +53,8 @@ app.get('/todos/:id',(req,res)=>{
    
 })
 
-app.listen(3000,()=>{
-    console.log('starting app on port 3000');
+app.listen(port,()=>{
+    console.log(`starting app on port ${port}`);
 });
 
 module.exports={
