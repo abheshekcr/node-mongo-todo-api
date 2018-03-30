@@ -102,7 +102,46 @@ describe('POST /todos',()=>{
             });
         });
 
-        
+        describe('DELETE /todos/:id',()=>{
+            it('should remove a doc',(done)=>{
+                var id=todos[1]._id.toHexString();
+                request(app)
+                .delete(`/todos/${id}`)
+                .expect(200)
+                .expect((res)=>{
+                    expect(res.body.todo._id).toBe(id);
+                }).end((err,res)=>{
+                    if(err){
+                        return done(err);
+                    }
+
+                    Todo.findById(id).then((todo)=>{
+                        expect(todo).toNotExist();
+                        done();
+                    }).catch((e)=>done(e));
+
+                });
+                
+            });
+
+
+            
+            it('should return 404 i todo not found',(done)=>{
+                var obj = new ObjectID();
+                request(app)
+                .get(`/todos/${obj.toHexString()}`)
+                .expect(404)
+                .end(done);
+            });
+
+            it('should return 404 if id not found',(done)=>{
+                request(app)
+                .get('/todos/123')
+                .expect(404)
+                .end(done);
+            });
+            
+        })
        
     
 });
