@@ -11,7 +11,9 @@ const todos=[{
 },
 {
     _id:new ObjectID(),
-    text:"second todo"
+    text:"second todo",
+    completed:false,
+    completedAt:333
 }]
 
 
@@ -142,6 +144,39 @@ describe('POST /todos',()=>{
             });
             
         })
+
+        describe('PATCH /todos/:id',()=>{
+            it('should update a todo',(done)=>{
+                var obj=todos[0]._id.toHexString();
+                request(app)
+                .patch(`/todos/${obj}`)
+                .send({text:"deergtb",completed:true})
+                .expect(200)
+                .expect((res)=>{
+                    expect(res.body.todo.text).toBe('deergtb');
+                    expect(res.body.todo.completed).toBe(true);
+                    expect(res.body.todo.completedAt).toBeA('number');
+                    
+                })
+                .end(done);
+            })
+
+            it('should clear completedAt when todo is not completed',()=>{
+                var obj=todos[1]._id.toHexString();
+                request(app)
+                .patch(`/todos/${obj}`)
+                .send({text:'dfvgbb',completed:false})
+                .expect(200)
+                .expect((res)=>{
+                    expect(res.body.todo.text).toBe(todos[1].text);
+                    expect(res.body.todo.completed).toBe(false);
+                    expect(res.body.todo.completedAt).toNotExist();
+                })
+                
+            })  
+
+
+        });
        
     
 });
